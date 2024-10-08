@@ -1,6 +1,7 @@
 package com.javanauta.usuario.controller;
 
 import com.javanauta.usuario.business.UsuarioService;
+import com.javanauta.usuario.business.dto.UsuarioRecord;
 import com.javanauta.usuario.business.dto.UsuarioRequestDTO;
 import com.javanauta.usuario.business.dto.UsuarioResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,13 +25,19 @@ public class UsuarioController {
     }
 
     @GetMapping("/{email}")
-    public ResponseEntity<UsuarioResponseDTO> buscaUsuarioPorEmail(@PathVariable("email") String email){
+    public ResponseEntity<UsuarioRecord> buscaUsuarioPorEmail(@PathVariable("email") String email){
         return ResponseEntity.ok(service.buscaUsuarioPorEmail(email));
     }
 
     @GetMapping
     public ResponseEntity<List<UsuarioResponseDTO>> buscaTodosUsuarios(){
         return ResponseEntity.ok(service.buscaTodosUsuarios());
+    }
+
+    @PutMapping
+    public ResponseEntity<UsuarioResponseDTO> updateUsuario(@RequestBody UsuarioRequestDTO dto,
+                                                            @RequestParam("id") Long id){
+        return ResponseEntity.ok(service.updateUsuario(dto, id));
     }
 
     @DeleteMapping
